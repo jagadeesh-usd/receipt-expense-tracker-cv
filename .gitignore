@@ -1,0 +1,23 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Virtual environment folders
+venv/
+env/
+*.env
+
+# IDE and OS specific files
+.idea/
+.vscode/
+.DS_Store
+
+# Large data files - VERY IMPORTANT
+# You should NOT commit your dataset to Git.
+data/processed/
+data/
+data/
+archieve/

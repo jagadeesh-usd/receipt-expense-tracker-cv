@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "receipt-ocr-project"
+version = "0.1.0"
+description = "Receipt Scanner + Expense Extraction using CV and OCR"
+authors = ["Your Name"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+# Core OCR + CV
+easyocr = "^1.7.1"
+opencv-python-headless = "^4.10.0.84"
+pillow = "^10.3.0"
+numpy = "^1.26.4"
+tqdm = "^4.66.4"
+
+# Database
+sqlalchemy = "^2.0.30"
+
+# File parsing
+python-multipart = "^0.0.9"
+
+# OPTIONAL: HuggingFace (Donut / TrOCR / LayoutLMv3)
+transformers = { version = "^4.41.0", optional = true }
+timm = { version = "^1.0.7", optional = true }
+sentencepiece = { version = "^0.2.0", optional = true }
+
+# OPTIONAL: FastAPI backend
+fastapi = { version = "^0.110.0", optional = true }
+uvicorn = { version = "^0.29.0", extras = ["standard"], optional = true }
+
+# OPTIONAL: Streamlit UI
+streamlit = { version = "^1.33.0", optional = true }
+
+[tool.poetry.extras]
+hf = ["transformers", "timm", "sentencepiece"]
+api = ["fastapi", "uvicorn"]
+ui = ["streamlit"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
