@@ -53,12 +53,12 @@ This project develops an **end-to-end hybrid computer vision pipeline** that aut
 - ✅ **Multi-Engine Comparison:** Evaluated both EasyOCR and Tesseract
 - ✅ **Comprehensive Evaluation:** 4-way comparison matrix (OCR-only vs Hybrid × 2 engines)
 
-**Performance Gains:**
+**Final Performance Results:**
 | Approach | Vendor | Date | Total | Average |
 |----------|--------|------|-------|---------|
-| **Hybrid (YOLO + Tesseract)** | **74.4%** | **67.2%** | **56.5%** | **66.0%** |
-| Tesseract-Only | ~61% | ~55% | ~46% | ~54% |
-| **Improvement** | **+13.4%** | **+12.2%** | **+10.5%** | **+12.0%** |
+| **YOLO + Tesseract (BEST)** | **75.8%** | **65.4%** | **54.8%** | **65.3%** |
+| EasyOCR | 39.5% | 36.6% | 40.9% | 39.0% |
+| Tesseract-Only | 37.5% | 36.9% | 47.8% | 40.7% |
 
 ---
 
@@ -67,10 +67,10 @@ This project develops an **end-to-end hybrid computer vision pipeline** that aut
 **SROIE (Scanned Receipts OCR and Information Extraction)**
 
 - **Source:** [ICDAR 2019 Competition](https://rrc.cvc.uab.es/?ch=13)
-- **Size:** 1,000 scanned receipt images
+- **Size:**  
   - 626 training images
   - 347 testing images (used for evaluation)
-  - 27 validation images
+ 
 
 **Characteristics:**
 - Real-world financial documents
@@ -167,20 +167,19 @@ if std > 55:    → Shadowed (20% of dataset) → Adaptive Threshold
 - **Training:** YOLOv8n, 50 epochs, 384×384px, achieved **84.1% mAP@0.5**
 
 **Per-class Detection Performance:**
-- Vendor: 96.5% mAP ⭐ (excellent header detection)
-- Date: 77.9% mAP
-- Total: 77.9% mAP
+- Vendor: 96.2% mAP ⭐ (excellent header detection)
+- Date: 69.6% mAP
+- Total: 74.5% mAP
 
 ### 3. **Multi-Engine Comprehensive Evaluation**
 
-First systematic comparison of 4 approaches on SROIE:
+First systematic comparison of 3 approaches on SROIE:
 
 | Approach | Vendor | Date | Total | Avg | Notes |
 |----------|--------|------|-------|-----|-------|
-| **YOLO + Tesseract** | 74.4% | 67.2% | 56.5% | **66.0%** | Best evaluated |
-| YOLO + EasyOCR | ??? | ??? | ??? | ??? | Future work |
-| EasyOCR-Only | ~65% | ~58% | ~48% | ~57% | Baseline |
-| Tesseract-Only | ~61% | ~55% | ~46% | ~54% | Baseline |
+| **YOLO + Tesseract** | **75.8%** | **65.4%** | **54.8%** | **65.3%** | **BEST** ✅ |
+| EasyOCR-Only | 39.5% | 36.6% | 40.9% | 39.0% | Underperforms |
+| Tesseract-Only | 37.5% | 36.9% | 47.8% | 40.7% | Baseline |
 
 **Key Finding:** YOLO improves Tesseract by **+12% absolute** (22% relative)
 
@@ -194,19 +193,19 @@ First systematic comparison of 4 approaches on SROIE:
 ╔════════════════╦══════════╦══════════╦═══════╦════════╗
 ║ Class          ║ Precision║  Recall  ║  mAP  ║ Images ║
 ╠════════════════╬══════════╬══════════╬═══════╬════════╣
-║ Vendor         ║  87.4%   ║  96.5%   ║ 96.5% ║   344  ║
-║ Date           ║  87.4%   ║  67.9%   ║ 69.6% ║   344  ║
-║ Total          ║  87.4%   ║  67.9%   ║ 75.4% ║   344  ║
+║ Vendor         ║  86.3%   ║  94.0%   ║ 96.2% ║   235  ║
+║ Date           ║  68.3%   ║  63.4%   ║ 69.6% ║    68  ║
+║ Total          ║  72.8%   ║  68.0%   ║ 74.5% ║   338  ║
 ╠════════════════╬══════════╬══════════╬═══════╬════════╣
-║ Overall        ║  87.4%   ║  75.5%   ║ 84.1% ║   344  ║
+║ Overall        ║  75.8%   ║  75.1%   ║ 80.1% ║   344  ║
 ╚════════════════╩══════════╩══════════╩═══════╩════════╝
 ```
 
 **Training Details:**
 - Model: YOLOv8n (3.2M parameters)
-- Input: 384×384px
+- Input: 1280px
 - Epochs: 50
-- Hardware: A100 GPU (~15 minutes)
+- Hardware: A100 GPU (~22 minutes)
 - Dataset: 626 train, 344 val
 
 ### End-to-End Extraction Performance
@@ -219,30 +218,6 @@ Total Accuracy:   56.48%
 ─────────────────────────
 Average:          65.99%
 ```
-
-**Comparison vs Baselines:**
-- vs Tesseract-only: **+12.0%** absolute improvement
-- vs EasyOCR-only: **+9.0%** absolute improvement (estimated)
-
-### Error Analysis
-
-**Vendor Extraction (25.7% error rate):**
-- Multi-line vendor names
-- Special characters (é, ñ, &)
-- Decorative/stylized fonts
-
-**Date Extraction (32.9% error rate):**
-- Digit confusion (0↔O, 1↔l)
-- Format ambiguity (DD/MM vs MM/DD)
-- Print date vs transaction date
-
-**Total Extraction (43.5% error rate - highest):**
-- Multiple currency amounts on receipt
-- Subtotal vs grand total confusion
-- Missing "Total" label
-- OCR errors in decimal digits
-
----
 
 ## 🚀 Installation
 
@@ -331,28 +306,6 @@ drive.mount('/content/drive')
 PROCESS_EASYOCR = True      # Extract from EasyOCR results
 PROCESS_TESSERACT = True    # Extract from Tesseract results
 SPLITS = ["train", "test"]  # Which splits to process
-```
-
-### Single Image Inference
-
-```python
-from ultralytics import YOLO
-import cv2
-import pytesseract
-
-# Load model
-model = YOLO("models/yolo_receipts_highres_small/weights/best.pt")
-
-# Predict
-results = model.predict("path/to/receipt.jpg", conf=0.10)
-
-# Extract fields
-for box in results[0].boxes:
-    label = model.names[int(box.cls[0])]
-    x1, y1, x2, y2 = map(int, box.xyxy[0])
-    crop = cv2.imread("path/to/receipt.jpg")[y1:y2, x1:x2]
-    text = pytesseract.image_to_string(crop)
-    print(f"{label}: {text}")
 ```
 
 ---
@@ -450,25 +403,6 @@ def adaptive_preprocess(image):
 
 ---
 
-## 🔮 Future Work
-
-### Short-Term (+5-10%)
-- Better total regex (prefer "Grand Total")
-- Date post-processing (fix OCR errors)
-- Vendor cleanup (multi-line handling)
-
-### Medium-Term (+8-15%)
-- OCR ensemble (EasyOCR + Tesseract voting)
-- Larger YOLO (YOLOv8m/l)
-- Learned extraction (BERT NER)
-
-### Long-Term
-- End-to-end models (Donut, LayoutLMv3)
-- Active learning
-- Multi-modal integration
-
----
-
 ## 📚 References
 
 1. SROIE 2019: https://rrc.cvc.uab.es/?ch=13
@@ -499,24 +433,6 @@ MIT License - see [LICENSE](LICENSE) file
 University of San Diego  
 Email: jsellappan@sandiego.edu  
 GitHub: [@jagadeesh-usd](https://github.com/jagadeesh-usd)
-
----
-
-## 📊 Quick Stats
-
-```
-╔══════════════════════════════════════════════════════════════╗
-║                    PROJECT METRICS                           ║
-╠══════════════════════════════════════════════════════════════╣
-║ Dataset:                   1,000 images (SROIE 2019)        ║
-║ YOLO mAP@0.5:             84.1%                             ║
-║ End-to-End Accuracy:       66.0% (YOLO + Tesseract)         ║
-║ Improvement vs Baseline:  +12.0% absolute                   ║
-║ Training Time:            ~15 minutes (A100 GPU)            ║
-║ Inference Speed:          ~1.6 sec/image                    ║
-║ Code Notebooks:            9 comprehensive modules           ║
-╚══════════════════════════════════════════════════════════════╝
-```
 
 ---
 
