@@ -47,31 +47,6 @@ This project develops an **end-to-end hybrid computer vision pipeline** that aut
 
 ---
 
-## 🔄 Evolution from Original Plan
-
-### **Original Proposal (Module 4 Submission)**
-*Traditional OCR-first approach:*
-```
-Image → Preprocessing → OCR → Regex Extraction → Output
-```
-
-**Limitations identified:**
-- OCR struggles with cluttered receipts
-- Difficult to separate vendor/date/total from noise
-- No spatial understanding of document layout
-
-### **Evolved Implementation (Final)**
-*Hybrid YOLO + OCR approach:*
-```
-Image → Quality Analysis → Adaptive Preprocessing
-      → YOLO Detection (84% mAP)
-      → Crop Regions of Interest
-      → OCR (EasyOCR/Tesseract)
-      → Field Extraction
-      → Validation & Fallback
-      → Output
-```
-
 **Key Improvements:**
 - ✅ **YOLO Integration:** Added object detection for vendor/date/total localization
 - ✅ **Adaptive Preprocessing:** Quality-based preprocessing (faint/normal/shadowed)
@@ -220,8 +195,8 @@ First systematic comparison of 4 approaches on SROIE:
 ║ Class          ║ Precision║  Recall  ║  mAP  ║ Images ║
 ╠════════════════╬══════════╬══════════╬═══════╬════════╣
 ║ Vendor         ║  87.4%   ║  96.5%   ║ 96.5% ║   344  ║
-║ Date           ║  87.4%   ║  67.9%   ║ 77.9% ║   344  ║
-║ Total          ║  87.4%   ║  67.9%   ║ 77.9% ║   344  ║
+║ Date           ║  87.4%   ║  67.9%   ║ 69.6% ║   344  ║
+║ Total          ║  87.4%   ║  67.9%   ║ 75.4% ║   344  ║
 ╠════════════════╬══════════╬══════════╬═══════╬════════╣
 ║ Overall        ║  87.4%   ║  75.5%   ║ 84.1% ║   344  ║
 ╚════════════════╩══════════╩══════════╩═══════╩════════╝
@@ -410,10 +385,6 @@ receipt-expense-tracker-cv/
 │   └── models/
 │       └── yolo_receipts_highres_small/weights/best.pt
 │
-├── docs/
-│   ├── Technical_Report_APA7.docx # 18-page technical report
-│   ├── Presentation_Slides.pptx   # 10-slide presentation
-│   └── Team_Project_Status_Update_Form.pdf
 │
 ├── requirements.txt               # Python dependencies
 ├── README.md                      # This file
@@ -549,7 +520,7 @@ GitHub: [@jagadeesh-usd](https://github.com/jagadeesh-usd)
 
 ---
 
-**Last Updated:** December 2024  
+**Last Updated:** December 2025 
 **Status:** ✅ Complete  
 **Reproducibility:** High
 
