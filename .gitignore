@@ -19,3 +19,4 @@ env/
 # You should NOT commit your dataset to Git.
 data/processed/
 data/
+data/
