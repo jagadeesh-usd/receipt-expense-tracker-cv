@@ -13,10 +13,8 @@
 ## 📋 Table of Contents
 
 - [Project Overview](#-project-overview)
-- [Evolution from Original Plan](#-evolution-from-original-plan)
 - [Dataset](#-dataset)
 - [System Architecture](#-system-architecture)
-- [Novel Contributions](#-novel-contributions)
 - [Results](#-results)
 - [Installation](#-installation)
 - [Usage](#-usage)
