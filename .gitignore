@@ -18,3 +18,4 @@ env/
 # Large data files - VERY IMPORTANT
 # You should NOT commit your dataset to Git.
 data/processed/
+data/
