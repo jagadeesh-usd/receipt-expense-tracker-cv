@@ -1,4 +1,4 @@
-# Automated Expense Extraction: Receipt Parsing Using Computer Vision and OCR
+# A Hybrid YOLO and OCR Approach for Automated Receipt Information Extraction
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -112,7 +112,7 @@ Each receipt includes:
                 ┌────────────▼────────────┐
                 │   YOLO Detection        │
                 │   (Vendor/Date/Total)   │
-                │   84.1% mAP@0.5        │
+                │   80.1% mAP@0.5        │
                 └────────────┬────────────┘
                              │
                 ┌────────────▼────────────┐
@@ -151,9 +151,9 @@ Developed empirical thresholds for receipt quality classification:
 
 ```python
 # Quality Classification (from EDA)
-if std < 30:    → Faint    (24% of dataset) → Light CLAHE (1.8)
-if 30-55:       → Normal   (56% of dataset) → Medium CLAHE (2.5)
-if std > 55:    → Shadowed (20% of dataset) → Adaptive Threshold
+if std < 30:      → Faint    (29% of dataset) → Light CLAHE (1.8)
+if 30 ≤ std ≤ 55: → Normal   (60% of dataset) → Medium CLAHE (2.5)
+if std > 55:      → Shadowed (11% of dataset) → Adaptive Threshold
 ```
 
 **Impact:** 15-25% estimated improvement over uniform preprocessing
