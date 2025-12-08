@@ -239,8 +239,16 @@ pip install -r requirements.txt
 # Manual download from: https://rrc.cvc.uab.es/?ch=13
 # Place in: data/raw/SROIE2019/
 
-# 4. Verify structure
-python verify_setup.py
+# 3. Install Tesseract OCR Engine (Required for pytesseract)
+# Linux (Ubuntu/Debian/Colab):
+sudo apt install tesseract-ocr
+
+# macOS (Homebrew):
+brew install tesseract
+
+# Windows:
+# Download installer from: https://github.com/UB-Mannheim/tesseract/wiki
+# And add Tesseract to your System PATH variables.
 ```
 
 ### Requirements
