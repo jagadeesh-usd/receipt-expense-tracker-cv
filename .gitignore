@@ -15,9 +15,8 @@ env/
 .vscode/
 .DS_Store
 
-# Large data files - VERY IMPORTANT
-# You should NOT commit your dataset to Git.
+# Large data files
 data/processed/
 data/
 data/
-archieve
+archieve/
