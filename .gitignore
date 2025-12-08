@@ -19,4 +19,4 @@ env/
 data/processed/
 data/
 data/
-archieve/
+archieve/*
